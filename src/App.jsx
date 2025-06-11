@@ -22,7 +22,7 @@ const TABS_DATA = {
 // --- Reusable Components ---
 
 const StatCard = ({ label, value, description }) => (
-    <div className="bg-white rounded-lg shadow-md p-6 text-center">
+    <div className="bg-white dark:bg-white rounded-lg shadow-md p-6 text-center">
         <p className="text-lg font-semibold text-gray-500">{label}</p>
         <p className="text-5xl font-bold text-[#0077B6] my-2">{value}</p>
         <p className="text-gray-600">{description}</p>
@@ -34,7 +34,7 @@ const AccordionItem = ({ title, children }) => {
     const contentRef = useRef(null);
 
     return (
-        <div className="bg-white rounded-lg shadow-md">
+        <div className="bg-white dark:bg-white rounded-lg shadow-md">
             <button
                 className="w-full flex justify-between items-center p-5 text-left font-semibold text-lg"
                 onClick={() => setIsOpen(!isOpen)}
@@ -91,8 +91,14 @@ const PowerValueChart = () => {
             }
         },
         scales: {
-            y: { grid: { display: false } },
-            x: { beginAtZero: true }
+            y: { 
+                grid: { display: false },
+                ticks: { color: '#374151' } 
+            },
+            x: { 
+                beginAtZero: true,
+                ticks: { color: '#374151' }
+            }
         }
     };
 
@@ -135,7 +141,7 @@ export default function App() {
     };
 
     return (
-        <div className="font-sans bg-[#f0f9ff] text-gray-800 antialiased">
+        <div className="font-sans bg-[#f0f9ff] dark:bg-[#f0f9ff] text-gray-800 dark:text-gray-800 antialiased">
             <main className="container mx-auto p-4 md:p-8 max-w-6xl">
                 <header className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold text-[#023E8A] mb-4">The Art of Attribution: From Data to Decisions</h1>
@@ -157,12 +163,12 @@ export default function App() {
                         <p className="mt-2 text-gray-600 max-w-2xl mx-auto">Structure your presentation as a compelling narrative to guide your audience from data to decision.</p>
                     </div>
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <div className="bg-white rounded-lg shadow-md p-8">
+                        <div className="bg-white dark:bg-white rounded-lg shadow-md p-8">
                             <h3 className="text-2xl font-bold mb-4 text-[#023E8A]">Act 1 & 2: Power vs. Value</h3>
                             <p className="text-gray-700 mb-6">Start by showing the model's "Power Ranking" (overall channel importance) and immediately translate it into the "Value Ranking" (attributed revenue). This connects abstract weights to tangible business impact.</p>
                             <PowerValueChart />
                         </div>
-                        <div className="bg-white rounded-lg shadow-md p-8">
+                        <div className="bg-white dark:bg-white rounded-lg shadow-md p-8">
                             <h3 className="text-2xl font-bold mb-4 text-[#023E8A]">Act 3: The "Why" Behind the Data</h3>
                             <p className="text-gray-700 mb-6">Use a flow diagram to illustrate *how* customers move between channels. This narrative context explains why a channel is valuable, revealing its role as an opener, nurturer, or closer.</p>
                             <div className="bg-[#ADE8F4] p-6 rounded-lg text-center">
@@ -202,7 +208,7 @@ export default function App() {
                         <h2 className="text-3xl font-bold">Future-Proofing Your Strategy</h2>
                         <p className="mt-2 text-gray-600 max-w-2xl mx-auto">Understand the trade-offs when considering more advanced attribution models.</p>
                     </div>
-                    <div className="bg-white rounded-lg shadow-md max-w-4xl mx-auto p-8">
+                    <div className="bg-white dark:bg-white rounded-lg shadow-md max-w-4xl mx-auto p-8">
                         <div className="flex justify-center border-b mb-6">
                             {Object.keys(TABS_DATA).map(tabKey => (
                                 <button
