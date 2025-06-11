@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 
 // Helper function and data can be defined outside the component
 const TABS_DATA = {
@@ -43,69 +54,51 @@ const AccordionItem = ({ title, children }) => {
 };
 
 const PowerValueChart = () => {
-    const chartRef = useRef(null);
-    const chartInstance = useRef(null);
-
-    useEffect(() => {
-        if (chartRef.current) {
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
+    const data = {
+        labels: ['Sales Call', 'Email', 'Webcast', 'Web', 'Tools'],
+        datasets: [
+            {
+                label: 'Attribution Weight (%)',
+                data: [45, 35, 12, 6, 2],
+                backgroundColor: '#ADE8F4',
+                borderColor: '#00B4D8',
+                borderWidth: 2,
+            },
+            {
+                label: 'Attributed Revenue ($k)',
+                data: [350, 155, 95, 40, 15],
+                backgroundColor: '#0077B6',
+                borderColor: '#023E8A',
+                borderWidth: 2,
             }
-            const ctx = chartRef.current.getContext('2d');
-            chartInstance.current = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Sales Call', 'Email', 'Webcast', 'Web', 'Tools'],
-                    datasets: [
-                        {
-                            label: 'Attribution Weight (%)',
-                            data: [45, 35, 12, 6, 2],
-                            backgroundColor: '#ADE8F4',
-                            borderColor: '#00B4D8',
-                            borderWidth: 2,
-                        },
-                        {
-                            label: 'Attributed Revenue ($k)',
-                            data: [350, 155, 95, 40, 15],
-                            backgroundColor: '#0077B6',
-                            borderColor: '#023E8A',
-                            borderWidth: 2,
-                        }
-                    ]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: { position: 'top' },
-                        tooltip: {
-                            callbacks: {
-                                title: function(tooltipItems) {
-                                    const item = tooltipItems[0];
-                                    let label = item.chart.data.labels[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: { grid: { display: false } },
-                        x: { beginAtZero: true }
+        ]
+    };
+
+    const options = {
+        maintainAspectRatio: false,
+        responsive: true,
+        indexAxis: 'y',
+        plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        return Array.isArray(label) ? label.join(' ') : label;
                     }
                 }
-            });
-        }
-        return () => {
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
             }
-        };
-    }, []);
+        },
+        scales: {
+            y: { grid: { display: false } },
+            x: { beginAtZero: true }
+        }
+    };
 
     return (
         <div className="relative w-full max-w-[500px] mx-auto h-[280px] max-h-[320px]">
-            <canvas ref={chartRef}></canvas>
+            <Bar data={data} options={options} />
         </div>
     );
 };
